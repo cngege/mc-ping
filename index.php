@@ -6,7 +6,7 @@ error_reporting(0);                                            //关闭所有php
 $t1 = microtime(true);
 if (!empty($_REQUEST['ip']) && !empty($_REQUEST['port'])) {
     if ($handle = stream_socket_client("udp://{$_REQUEST['ip']}:{$_REQUEST['port']}", $errno, $errstr, 2)) {
-        stream_set_timeout($handle, 5);                        //超时时间5秒
+        stream_set_timeout($handle, 3);                        //超时时间3秒
         fwrite($handle, hex2bin('0100000000240D12D300FFFF00FEFEFEFEFDFDFDFD12345678') . "\n");
         $result = strstr(fread($handle, 1024), "MCPE");
         fclose($handle);
