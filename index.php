@@ -11,7 +11,7 @@ if (!empty($_REQUEST['ip']) && !empty($_REQUEST['port'])) {
         $result = strstr(fread($handle, 1024), "MCPE");
         fclose($handle);
         $data = explode(";", $result);
-        $data['1'] = preg_replace("/ยง[a-z A-Z 0-9]{1}/s", '', $data['1']);
+        $data['1'] = preg_replace("/§[a-z A-Z 0-9]{1}/s", '', $data['1']);
         if (!empty($data['1'])) {
         	$t2 = microtime(true);
             $array = [
