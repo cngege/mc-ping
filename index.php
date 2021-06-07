@@ -1,10 +1,18 @@
- <?php
+<?php
 // require_once('common.php');
 header("Access-Control-Allow-Origin: *");
 header('Content-type: application/json');
 error_reporting(0);                                            //关闭所有php错误报告
-$t1 = microtime(true);
+
 if (!empty($_REQUEST['ip']) && !empty($_REQUEST['port'])) {
+    $ip;
+    if(preg_match('/^((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1 -9]?\d))))$/', $_REQUEST['ip'])){
+        //is IPaddr
+        $ip = $_REQUEST['ip'];
+    }else{
+        $ip = gethostbyname($_REQUEST['ip']);
+    }
+    $t1 = microtime(true);
     if ($handle = stream_socket_client("udp://{$_REQUEST['ip']}:{$_REQUEST['port']}", $errno, $errstr, 2)) {
         stream_set_timeout($handle, 3);                        //超时时间3秒
         fwrite($handle, hex2bin('0100000000240D12D300FFFF00FEFEFEFEFDFDFDFD12345678') . "\n");
@@ -16,7 +24,8 @@ if (!empty($_REQUEST['ip']) && !empty($_REQUEST['port'])) {
         	$t2 = microtime(true);
             $array = [
                 'status' => 'online',
-                'ip' => $_REQUEST['ip'],
+                'orinigal' => $result,
+                'ip' => $ip,
                 'port' => $_REQUEST['port'],
                 'motd' => $data['1'],
                 'agreement' => $data['2'],
