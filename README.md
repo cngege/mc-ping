@@ -18,7 +18,7 @@ port|19132|服务器端口
 参数|示例|描述
 -|-|-
 status|online|服务器唯一状态识别
-ip|www.the-ink-man.xyz|返回查询IP
+ip|10.11.12.13|返回查询IP
 port|19132|返回查询端口
 motd|富强民主文明和谐自由平等公正法治爱国敬业诚信友善|服务器广播内容Motd
 agreement|407|协议版本
